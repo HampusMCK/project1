@@ -190,6 +190,8 @@ int main()
     Rectangle start_button = {screenSize.x / 2 - 100, screenSize.y / 2 - 50, 200, 100};
     Rectangle shop_button = {screenSize.x / 2 - 100, screenSize.y / 2 + 100, 200, 100};
 
+    Rectangle restart_button = {screenSize.x / 2 - 100, screenSize.y / 2 - 50, 200, 100};
+
     //---------Shop Buttons--------
     Rectangle s_butt[4] = {
         {300, screenSize.y / 2 - 50, 200, 100},
@@ -473,6 +475,34 @@ int main()
             }
         }
 
+        if (gs == gs_game_over)
+        {
+            ClearBackground(BLUE);
+
+            DrawRectangleRec(restart_button, LIGHTGRAY);
+            DrawRectangleLinesEx(restart_button, 2, BLACK);
+            DrawText("Restart", (restart_button.x + (restart_button.width / 2)) - (MeasureText("Restart", 24) / 2), restart_button.y + 12, 24, BLACK);
+            if (CheckCollisionPointRec(mousepos, restart_button))
+            {
+                DrawRectangleRec(restart_button, GRAY);
+                DrawRectangleLinesEx(restart_button, 3, BLACK);
+                DrawText("Restart", (restart_button.x + (restart_button.width / 2)) - (MeasureText("Restart", 24) / 2), restart_button.y + 12, 24, BLACK);
+                if (IsMouseButtonPressed(0))
+                {
+                    level = 1;
+                    ball_amount = 3;
+                    for (int i = 0; i < 100; i++)
+                    {
+                        if (blocks[i].alive)
+                        {
+                            blocks[i].hits = 0;
+                            blocks[i].alive = false;
+                        }
+                    }
+                    gs = gs_start;
+                }
+            }
+        }
         EndDrawing();
         //-------------------------------------------
 
